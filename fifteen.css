@@ -1,0 +1,28 @@
+body {
+	background-color: beige;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 18px;
+	text-align: center;
+}
+
+#puzzlearea {
+	width: 400px;
+}
+
+/* This is the puzzle's "board" area. Hardcoded to 400 px with 96 px squares w/ 2px black borders */
+#puzzlearea {
+	font-size: 32px;
+	height: 400px;
+	padding: 0px;
+	position: relative;
+	margin: auto;
+}
+
+/* This class is for each of the 15 puzzle pieces */
+.squarepiece {
+	border: 2px solid black;
+	line-height: 96px;
+	width: 96px;
+	position: absolute;
+	text-align: center;
+}
