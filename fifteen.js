@@ -3,9 +3,30 @@
 //I don't know how I could fix that without making a bunch of new variables to make it "less confusing".
 //I feel like my code should be straight forward enough
 
+//RT The instructions said to use a class.  If you put all your code in a
+// class, and have the constructor do the setup.  Then the onload handler
+// just creates a new object.
+//
+// However, the biggest problem with JSlint is that I should have
+// updated the instructions to say ESlint instead.  It's much newer
+// and understands modern Javascript (EcmaScript, hence the name.)
+//
+//
+//
+// Please limit lines to 80 (or at most 100) chars; there are some 120 char
+// lines.  Part of the problem may be indenting with tabs, which show up
+// as 8 spaces in github and many other contexts (and always for me, since
+// I find it best to see them as others might).
+//
+
 //All of the code "loads" when the game loads
 window.onload = function ()
 {
+        //RT It would be better to put all this in a class
+
+        //RT
+
+
 	//The structure of the code in this onload function is heavily inspired by various demo games that I have found online.
 	//What I borrowed, for the most part, is the looping through squares/separaing the image by squares, and the idea of using
 	//classes to set the letious metrics and attributes for the individual squares. Everything else was coded on my own.
@@ -14,22 +35,25 @@ window.onload = function ()
 	let positionX = '300px';
 	let positionY = '300px';
 	let puzzleArea = document.getElementById('puzzlearea');
-	let squares = puzzleArea.getElementsByTagName('div'); //retrieve all of the squares in the grid
+        let squares = puzzleArea.getElementsByTagName('div'); //retrieve all of the squares in the grid
+
+        //RT Nice helper function
 	//Checks if the piece is moveable and returns the appropriate boolean
 	const isMoveable = function(position) {
 		if (left(positionX, positionY) == (position-1))
 			return true;
-	
+
 		if (down(positionX, positionY) == (position-1))
 			return true;
-	
+
 		if (up(positionX, positionY) == (position-1))
 			return true;
-	
+
 		if (right(positionX, positionY) == (position-1))
 			return true;
 	};
-	
+
+        //RT Nice touch, and nice function
 	//Checks if all the pieces are in their respective places
 	const finishedPuzzle = function() {
 		let end = true;
@@ -48,12 +72,16 @@ window.onload = function ()
 		return end;
 	};
 
+        //RT Is there a way to combine these 4 functions, to have less
+        // repeated code?
+
+        //RT Huh?  What does this mean?
 	//Figures out how far to the left the puzzle piece should reposition
 	const left = function(x, y) {
-		
+
 		x = parseInt(x);
 		y = parseInt(y);
-	
+
 		if (x > 0) {
 			for (let i = 0; i < squares.length; i++) {
 				if (parseInt(squares[i].style.left) + 100 == x && parseInt(squares[i].style.top) == y) {
@@ -65,13 +93,13 @@ window.onload = function ()
 			return -1;
 		}
 	};
-	
+
 	//Figures out how far to the right the puzzle piece should reposition
 	const right = function(x, y) {
 
 		x = parseInt(x);
 		y = parseInt(y);
-	
+
 		if (x < 300) {
 			for (let i =0; i<squares.length; i++) {
 				if (parseInt(squares[i].style.left) - 100 == x && parseInt(squares[i].style.top) == y) {
@@ -81,33 +109,33 @@ window.onload = function ()
 		}
 		else {
 			return -1;
-		} 
+		}
 	};
-	
+
 	//Figures out how far up the puzzle piece should reposition
 	const up = function(x, y) {
 
 		x = parseInt(x);
 		y = parseInt(y);
-	
+
 		if (y > 0) {
 			for (let i=0; i<squares.length; i++) {
 				if (parseInt(squares[i].style.top) + 100 == y && parseInt(squares[i].style.left) == x) {
 					return i;
 				}
-			} 
+			}
 		}
 		else {
 			return -1;
 		}
 	};
-	
+
 	//Figures out how far down the puzzle piece should reposition
 	const down = function(x, y) {
 
 		x = parseInt(x);
 		y = parseInt(y);
-	
+
 		if (y < 300) {
 			for (let i=0; i<squares.length; i++) {
 				if (parseInt(squares[i].style.top) - 100 == y && parseInt(squares[i].style.left) == x) {
@@ -117,9 +145,10 @@ window.onload = function ()
 		}
 		else {
 			return -1;
-		} 
+		}
 	};
 
+        //RT It would be better to say what it does
 	//This is my attempt at directly translating a Python algorithm into JavaScript, with the help of StackOverflow
 	//I hope this code is fundamentally sound
 	function move (position) {
@@ -130,7 +159,8 @@ window.onload = function ()
 		squares[position].style.left = positionX;
 		positionX = tempSquare;
 	}
-	
+
+        //RT This code should be in a method or function, with a comment
 	for (let i=0; i<squares.length; i++) {
 
 		//The idea of making each individual square a class is genius. I took this idea from online, and I implemented it myself
@@ -140,7 +170,14 @@ window.onload = function ()
 		squares[i].style.top = (parseInt(i/4)*100) + 'px'; //Calculates the y-position
 
 		//This basically gives each puzzle piece a "chunk" of the background image, which makes the background moveable
-		squares[i].style.backgroundPosition= '-' + squares[i].style.left + ' ' + '-' + squares[i].style.top; 
+		squares[i].style.backgroundPosition= '-' + squares[i].style.left + ' ' + '-' + squares[i].style.top;
+
+
+                //RT Better to define multi-line functions outside,
+                // not in a loop.
+                //
+                // onmouseover and onmouseout work, but :hover in css would
+                // be easier.
 
 		//If you hover over a square, and it's a moveable square, this if statement returns true
 		squares[i].onmouseover = function() {
@@ -153,7 +190,7 @@ window.onload = function ()
 
 		//If your mouse leaves one of the squares, then it's original border is reset to it's original state
 		squares[i].onmouseout = function() {
-			this.style.border = "2px solid black"; //reverts to its original size border 
+			this.style.border = "2px solid black"; //reverts to its original size border
 			this.style.color = "black"; //reverts to original text color
 			this.style.textDecoration = "none"; //reverts to original text state
 		};
@@ -186,7 +223,7 @@ window.onload = function ()
 
 				if (rand == 1) {
 					temp = down(positionX, positionY);
-					if (temp != -1) 
+					if (temp != -1)
 						move(temp);
 				}
 
